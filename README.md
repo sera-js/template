@@ -1,4 +1,4 @@
-# SeraJS
+# 🤷‍♀️ SeraJS
 
 ## 📖 Introduction
 
