@@ -1,4 +1,4 @@
-# 📘 SeraJS Documentation
+# SeraJS
 
 ## 📖 Introduction
 
