@@ -5,5 +5,9 @@
   },
   "devDependencies": {
     "vite": "^6.2.6"
+  },
+  "dependencies": {
+    "serajs": "^1.0.3",
+    "seraplugin": "^1.0.0"
   }
 }

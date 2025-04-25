@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
+import seraPlugin from "seraplugin";
 
 export default defineConfig({
-  esbuild: {
-    jsxFactory: "h",
-  },
+  plugins: [seraPlugin()],
 });
