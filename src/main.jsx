@@ -1,3 +1,3 @@
 import { h } from "./olova";
-import App from "./app.jsx";
+import App from "./App";
 document.getElementById("root").appendChild(<App />);

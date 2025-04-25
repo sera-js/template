@@ -1,20 +1,46 @@
-import { h, signal, effect } from "./olova.js";
+import { h, setSignal, setEffect, Fragment } from "./olova.js";
+import Counter from "./Counter.jsx";
 
 export default function App() {
-  const count = signal(0);
+  const [users, setUsers] = setSignal([]);
+  const [loading, setLoading] = setSignal(true);
 
-  effect(() => {
-    console.log(count());
+  // Fetch users on component init
+  setEffect(() => {
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch users:", error);
+        setLoading(false);
+      });
   });
 
+  // Render user list
+  const UserList = () => {
+    const currentUsers = users();
+    if (loading()) return <p>Loading users...</p>;
+    if (!currentUsers || currentUsers.length === 0)
+      return <p>No users found</p>;
+
+    return (
+      <Fragment>
+        {currentUsers.map((user) => (
+          <p key={user.id}>{user.name}</p>
+        ))}
+      </Fragment>
+    );
+  };
+
   return (
-    <div>
-      <h1>{() => count()}</h1>
-      <button onclick={() => count.set(count() + 1)}>Click me!</button>
-
-      <p>This is inside the Helper component</p>
-
-      {/* SVG element example */}
+    <div class="container">
+      <h1>User List</h1>
+      <div class="user-list">{UserList}</div>
+      <Counter />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -32,9 +58,6 @@ export default function App() {
         <path d="M18.3 17.7a2.5 2.5 0 0 1-3.16 3.83 2.53 2.53 0 0 1-1.14-2V12" />
         <path d="M6.6 15.6A2 2 0 1 0 10 17v-5" />
       </svg>
-
-      {/* Another content */}
-      <button>Another button inside Helper</button>
     </div>
   );
 }
